@@ -1,8 +1,6 @@
 package Controller;
 
-import javax.swing.*;
 import java.awt.event.*;
-
 import Model.Memory;
 import View.*;
 
@@ -21,18 +19,25 @@ public class ButtonController implements ActionListener {
         if (e.getActionCommand().equals("New")) {
             model.setRows(4);
             model.setCols(4);
+            model.setDifficulty("New");
             model.newGame();
         } else if (e.getActionCommand().equals("Medium")) {
             model.setRows(4);
             model.setCols(5);
+            model.setDifficulty("Medium");
             model.newGame();
         } else if (e.getActionCommand().equals("Hard")) {
             model.setRows(4);
             model.setCols(6);
+            model.setDifficulty("Hard");
             model.newGame();
         } else if (e.getActionCommand().equals("Exit")) {
             System.exit(0);
+        } else {
+            model.setFlippedImage(e.getActionCommand());
+            System.out.printf(" BTN " + e.getActionCommand());
         }
+
     }
 
 }

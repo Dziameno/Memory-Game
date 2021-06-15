@@ -13,10 +13,10 @@ public class View {
     JFrame frame = new JFrame();
     JPanel gamePanel = new JPanel();
 
-    private List<Card> cards=new ArrayList<>();
+    private List<Card> cards = new ArrayList<>();
     private Memory model;
     private ButtonController controller;
-    private JLabel name, info;
+    private JLabel name, info, result;
     private JButton startGame = new JButton("New Game");
     private JButton exitGame = new JButton("Exit Game");
     private JButton easy = new JButton("Easy");
@@ -41,7 +41,9 @@ public class View {
         exitGame.setFont(new Font("MineCrafter", Font.BOLD, 20));
 
         name = new JLabel("<html>MEMEory<br>The Game</html", SwingConstants.CENTER);
-        info = new JLabel("<html><br><br><br><br><br>Welcome!<br>" +
+        result = new JLabel("WIN", SwingConstants.CENTER);
+
+        info = new JLabel("<html><br><br><br><br><br><br><br>Welcome!<br>" +
                 "Rules of the game are following:<br>" +
                 "Match: Player make match if two turned up pictures are the same<br> " +
                 "Miss: Player misses if two turned up pictures are different<br>" +
@@ -57,7 +59,9 @@ public class View {
 
         namePanel.setSize(100, 50);
         name.setFont(titleFont);
+        result.setFont(titleFont);
         namePanel.add(name);
+        namePanel.add(result);
 
         gamePanel.setSize(200, 200);
         info.setFont(infoFont);
@@ -91,19 +95,21 @@ public class View {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void drawBoard(int rows, int cols) {
+    public void drawBoard(List<Card> cards, int rows, int cols) {
+        this.cards = cards;
         gamePanel.removeAll();
-        cards.clear();
         gamePanel.setLayout(new GridLayout(rows, cols));
-        //wywołanie tablicy cards i randomize
         for (int i = 0; i < rows * cols; i++) {
-            cards.add(new Card("ścieżka do obrazka"));
-            cards.get(i).getBtn().setBackground(Color.DARK_GRAY);
-            gamePanel.add(cards.get(i).getBtn());
-
-
+            JButton btn = cards.get(i).getBtn();
+            //btn.setBackground(Color.DARK_GRAY);
+            gamePanel.add(btn);
+            btn.setActionCommand(String.valueOf(i));
+            btn.addActionListener(controller);
         }
         frame.setVisible(true);
     }
 
+    public void setScore(int score) {
+        // TODO USTAWIC TU SCORE NA JLABEL
+    }
 }
