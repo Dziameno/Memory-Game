@@ -21,7 +21,12 @@ public class ButtonController implements ActionListener {
             model.setCols(4);
             model.setDifficulty("New");
             model.newGame();
-        } else if (e.getActionCommand().equals("Medium")) {
+        } else if (e.getActionCommand().equals("Easy")) {
+            model.setRows(4);
+            model.setCols(4);
+            model.setDifficulty("Easy");
+            model.newGame();
+        }else if (e.getActionCommand().equals("Medium")) {
             model.setRows(4);
             model.setCols(5);
             model.setDifficulty("Medium");
@@ -35,7 +40,6 @@ public class ButtonController implements ActionListener {
             System.exit(0);
         } else {
             model.setFlippedImage(e.getActionCommand());
-            System.out.printf(" BTN " + e.getActionCommand());
         }
 
     }

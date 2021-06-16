@@ -20,7 +20,9 @@ public class Memory {
 
     public void newGame() {
         cards = new ArrayList<>();
-        score = 0;
+        score = 50;
+        view.setScore(score);
+        view.resetGameStatus();
         int imagesNum = rows * cols / 2;
         List<String> chosenImages = new ArrayList<>();
         Random randomizer = new Random();
@@ -63,12 +65,13 @@ public class Memory {
 
     public void setFlippedImage(String flippedCardIndex) {
         Card c = cards.get(Integer.parseInt(flippedCardIndex));
-        if (c.isFlipped() || c.isMatched()) {
+        if (score <= 0 || c.isFlipped() || c.isMatched()) {
             return;
         } else if (this.flippedImage == null) {
             for (Card a : cards) {
                 if (a.isFlipped() && !a.isMatched()) {
                     a.setFlipped(false);
+                    score--;
                 }
             }
             this.flippedImage = c;
@@ -78,11 +81,24 @@ public class Memory {
             c.setMatched();
             c.setFlipped(true);
             this.flippedImage = null;
+            score += 5;
+
+            if (isWin()) {
+                view.winAlert();
+            }
         } else {
             c.setFlipped(true);
             this.flippedImage = null;
         }
-        ++score;
+        //--score;
+        if (score <= 0) {
+            score = 0;
+            view.lossAlert();
+        }
         view.setScore(score);
+    }
+
+    private boolean isWin() {
+        return cards.stream().allMatch(Card::isMatched);
     }
 }

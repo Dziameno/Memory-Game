@@ -12,70 +12,69 @@ import java.util.List;
 public class View {
     JFrame frame = new JFrame();
     JPanel gamePanel = new JPanel();
+    JPanel namePanel = new JPanel();
+    JPanel menuPanel = new JPanel();
+    JPanel alertPanel = new JPanel();
 
     private List<Card> cards = new ArrayList<>();
     private Memory model;
     private ButtonController controller;
-    private JLabel name, info, result;
-    private JButton startGame = new JButton("New Game");
+    private JLabel name, info, result, gameStatus;
     private JButton exitGame = new JButton("Exit Game");
     private JButton easy = new JButton("Easy");
     private JButton medium = new JButton("Medium");
     private JButton hard = new JButton("Hard");
 
+    Font titleFont = new Font("Copperplate Gothic", Font.BOLD, 66);
+    Font infoFont = new Font("Copperplate Gothic", Font.LAYOUT_NO_LIMIT_CONTEXT, 30);
 
     public View(Memory model) {
         this.model = model;
-        JPanel namePanel = new JPanel();
-        JPanel menuPanel = new JPanel();
         controller = new ButtonController(model, this);
 
         this.frame.setTitle("MEMEory The Game");
-        frame.setSize(1000, 1000);
-        Font titleFont = new Font("Copperplate Gothic Bold", Font.BOLD, 56);
-        Font infoFont = new Font("Copperplate Gothic Bold", Font.LAYOUT_NO_LIMIT_CONTEXT, 20);
-        startGame.setFont(new Font("MineCrafter", Font.BOLD, 20));
-        easy.setFont(new Font("MineCrafter", Font.ITALIC, 20));
-        medium.setFont(new Font("MineCrafter", Font.ITALIC, 20));
-        hard.setFont(new Font("MineCrafter", Font.ITALIC, 20));
-        exitGame.setFont(new Font("MineCrafter", Font.BOLD, 20));
+        frame.setSize(975, 1045);
 
-        name = new JLabel("<html>MEMEory<br>The Game</html", SwingConstants.CENTER);
-        result = new JLabel("WIN", SwingConstants.CENTER);
+        easy.setFont(new Font("Copperplate Gothic", Font.ITALIC, 20));
+        medium.setFont(new Font("Copperplate Gothic", Font.ITALIC, 20));
+        hard.setFont(new Font("Copperplate Gothic", Font.ITALIC, 20));
+        exitGame.setFont(new Font("Copperplate Gothic", Font.BOLD, 20));
 
-        info = new JLabel("<html><br><br><br><br><br><br><br>Welcome!<br>" +
+        name = new JLabel("<html>MEMEory</html>");
+        result = new JLabel(" ");
+
+        info = new JLabel("<html>Welcome!<br>" +
                 "Rules of the game are following:<br>" +
-                "Match: Player make match if two turned up pictures are the same<br> " +
-                "Miss: Player misses if two turned up pictures are different<br>" +
+                "Match: match if two pictures are same: +5 points<br> " +
+                "Miss: miss if two pictures are different: -2 points<br>" +
                 "End of Game: Game continues until Player match all cards!<br><br>" +
                 "Easy: 16 cards<br>" +
                 "Medium: 20 cards<br>" +
-                "Hard: 24 cards</html><br>", SwingConstants.CENTER);
+                "Hard: 24 cards<br><br>" +
+                "To start New Game, choose difficulty!</html>", SwingConstants.CENTER);
 
-        frame.setLayout(new BorderLayout());
-        frame.add(namePanel, BorderLayout.NORTH);
-        frame.add(gamePanel, BorderLayout.CENTER);
-        frame.add(menuPanel, BorderLayout.SOUTH);
+        namePanel.setBounds(25, 25, 600, 250);
+        gamePanel.setBounds(25, 275, 900, 700);
+        menuPanel.setBounds(725, 25, 200, 200);
+        gamePanel.setLayout(new GridLayout());
 
-        namePanel.setSize(100, 50);
+        frame.add(namePanel);
+        frame.add(gamePanel);
+        frame.add(menuPanel);
+        frame.add(alertPanel);
+
+        namePanel.setLayout(new GridLayout(3, 1));
         name.setFont(titleFont);
-        result.setFont(titleFont);
         namePanel.add(name);
         namePanel.add(result);
 
-        gamePanel.setSize(200, 200);
+        result.setFont(infoFont);
         info.setFont(infoFont);
         gamePanel.add(info);
 
-        menuPanel.setSize(50, 50);
-        menuPanel.setLayout(new GridLayout(5, 1));
-
-        menuPanel.add(startGame);
-        startGame.setActionCommand("New");
-        startGame.addActionListener(controller);
-
+        menuPanel.setLayout(new GridLayout(4, 1));
         menuPanel.add(easy);
-        easy.setActionCommand("New");
+        easy.setActionCommand("Easy");
         easy.addActionListener(controller);
 
         menuPanel.add(medium);
@@ -89,6 +88,10 @@ public class View {
         menuPanel.add(exitGame);
         exitGame.setActionCommand("Exit");
         exitGame.addActionListener(controller);
+
+        gameStatus = new JLabel("", SwingConstants.LEFT);
+        gameStatus.setFont(infoFont);
+        namePanel.add(gameStatus);
 
         frame.setResizable(false);
         frame.setVisible(true);
@@ -110,6 +113,18 @@ public class View {
     }
 
     public void setScore(int score) {
-        // TODO USTAWIC TU SCORE NA JLABEL
+        result.setText("Score : " + score);
+    }
+
+    public void lossAlert() {
+        gameStatus.setText("Game Over!");
+    }
+
+    public void winAlert() {
+        gameStatus.setText("You Won!");
+    }
+
+    public void resetGameStatus() {
+        gameStatus.setText("");
     }
 }
