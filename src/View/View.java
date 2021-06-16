@@ -58,6 +58,7 @@ public class View {
         menuPanel.setBounds(725, 25, 200, 200);
         gamePanel.setLayout(new GridLayout());
 
+        frame.setIconImage(new ImageIcon("src\\Resources\\Images\\rewers.png").getImage());
         frame.add(namePanel);
         frame.add(gamePanel);
         frame.add(menuPanel);
@@ -65,6 +66,7 @@ public class View {
 
         namePanel.setLayout(new GridLayout(3, 1));
         name.setFont(titleFont);
+        name.setForeground(new Color(253,86,33));
         namePanel.add(name);
         namePanel.add(result);
 
@@ -104,7 +106,6 @@ public class View {
         gamePanel.setLayout(new GridLayout(rows, cols));
         for (int i = 0; i < rows * cols; i++) {
             JButton btn = cards.get(i).getBtn();
-            //btn.setBackground(Color.DARK_GRAY);
             gamePanel.add(btn);
             btn.setActionCommand(String.valueOf(i));
             btn.addActionListener(controller);
@@ -114,14 +115,17 @@ public class View {
 
     public void setScore(int score) {
         result.setText("Score : " + score);
+        result.setForeground(new Color(253,86,33));
     }
 
     public void lossAlert() {
         gameStatus.setText("Game Over!");
+        gameStatus.setForeground(new Color(165,0,0));
     }
 
     public void winAlert() {
         gameStatus.setText("You Won!");
+        gameStatus.setForeground(new Color(0,165,0));
     }
 
     public void resetGameStatus() {

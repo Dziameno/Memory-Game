@@ -1,6 +1,7 @@
 package Model;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Card {
     private JButton btn;
@@ -13,12 +14,14 @@ public class Card {
         this.matched = false;
         this.flipped = false;
 
-        this.btn = new JButton();
+        this.btn = new JButton(new ImageIcon("src\\Resources\\Images\\rewers.png"));
+        btn.setBackground(new Color(238, 238, 238));
+        btn.setBorderPainted(false);
     }
 
     @Override
     public boolean equals(Object otherCard) {
-        return image.equals(((Card)otherCard).image);
+        return image.equals(((Card) otherCard).image);
     }
 
     public boolean isFlipped() {
@@ -28,9 +31,9 @@ public class Card {
     public void setFlipped(boolean flipped) {
         this.flipped = flipped;
         if (this.flipped) {
-            this.btn.setText(this.image);   // TODO obrazek a nie napis -setIcon
+            this.btn.setIcon(new ImageIcon("src\\Resources\\Images\\" + this.image));
         } else {
-            this.btn.setText("");
+            this.btn.setIcon(new ImageIcon("src\\Resources\\Images\\rewers.png"));
         }
     }
 
@@ -40,7 +43,7 @@ public class Card {
 
     public void setMatched() {
         this.matched = true;
-        this.btn.setText(this.image);   // TODO obrazek a nie napis -setIcon
+        this.btn.setIcon(new ImageIcon("src\\Resources\\Images\\" + this.image));
     }
 
     public JButton getBtn() {

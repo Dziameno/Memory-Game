@@ -16,25 +16,17 @@ public class ButtonController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("New")) {
+        if (e.getActionCommand().equals("Easy")) {
             model.setRows(4);
             model.setCols(4);
-            model.setDifficulty("New");
             model.newGame();
-        } else if (e.getActionCommand().equals("Easy")) {
-            model.setRows(4);
-            model.setCols(4);
-            model.setDifficulty("Easy");
-            model.newGame();
-        }else if (e.getActionCommand().equals("Medium")) {
+        } else if (e.getActionCommand().equals("Medium")) {
             model.setRows(4);
             model.setCols(5);
-            model.setDifficulty("Medium");
             model.newGame();
         } else if (e.getActionCommand().equals("Hard")) {
             model.setRows(4);
             model.setCols(6);
-            model.setDifficulty("Hard");
             model.newGame();
         } else if (e.getActionCommand().equals("Exit")) {
             System.exit(0);
